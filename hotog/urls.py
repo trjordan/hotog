@@ -10,7 +10,7 @@ urlpatterns = patterns('',
     # url(r'^hotog/', include('hotog.foo.urls')),
 
     (r'^suggestions/$', 'places.views.index'),
-    (r'^/$', 'places.views.index'),
+    (r'^$', 'places.views.index'),
     (r'^update/$', 'places.views.update'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
