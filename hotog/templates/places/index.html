@@ -1,1 +1,11 @@
-Go to <strong>{{ name }}</strong>.
+<html>
+  <head>
+  </head>
+  <body>
+    <ul>
+    {% for p in places %}
+      <li>Haven't been to {{ p.name }} in {{ p.current }} (normally every {{ p.mean }}).</li>
+    {% endfor %}
+    <ul>
+  </body>
+</html>

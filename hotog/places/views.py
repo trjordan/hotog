@@ -3,12 +3,35 @@ from django.http import HttpResponse
 
 import urllib
 import simplejson as json
-import datetime
+from datetime import date, datetime, timedelta
 
 from places.models import Place, Visit
 
+def total_days(td):
+    return td.total_seconds() / 86400
+
 def index(request):
-    return render_to_response('places/index.html', { 'name': 'Red Stripe' })
+    places = Place.objects.all()
+    place_stats = []
+    dt_now = datetime.now()
+    dnow = date(dt_now.year, dt_now.month, dt_now.day)
+    for p in places:
+        visits = p.visit_set.all()
+        if len(visits) == 0:
+            continue
+        
+        dates = [v.date for v in visits] + [dnow]
+        deltas = [v - dates[i-1] for i, v in enumerate(dates[1:], start=1)]
+        cur_delta = total_days(deltas[-1])
+        mean_delta = sum([total_days(d) for d in deltas]) / len(deltas)
+
+        place_stats.append({'name': p.name, 'mean': mean_delta, 'current': cur_delta})
+
+    # Sort by longest time since "due" date
+    place_stats.sort(key=lambda x: x['current'] - x['mean'])
+    places[0].foo = 'bar'
+
+    return render_to_response('places/index.html', { 'places': place_stats })
 
 def update(request, live=False):
     # f = open('test/data.txt')
@@ -42,7 +65,7 @@ def update(request, live=False):
     visits_to_add = [v for v in visits if v['id'] not in existing_visit_ids]
 
     for v in visits_to_add:
-        date = datetime.datetime.fromtimestamp(v['createdAt'])
+        date = date.fromtimestamp(v['createdAt'])
         place_objs[v['venue']['id']].visit_set.create(date=date, api_id=v['id'])
         
     ret = { 'places_created': len(places_to_add), 'visits_created': len(visits_to_add)}
