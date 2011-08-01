@@ -1,6 +1,7 @@
 Packages:
 apache2
 git-core (for read-only deploy access)
+libapache2-mod-wsgi
 
 Config HTTP Basic Auth :
  - Drop .htpasswd and .htaccess into /var/www/
