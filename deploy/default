@@ -1,3 +1,4 @@
+WSGIPythonHome /venv
 <VirtualHost *:80>
         Alias /robots.txt /deploy/hotog/hotog/static/robots.txt
         Alias /favicon.ico /deploy/hotog/hotog/static/favicon.ico
@@ -17,9 +18,9 @@
             Allow from all
         </Directory>
 
-        WSGIScriptAlias / /deploy/hotog/install/apache/django.wsgi
+        WSGIScriptAlias / /deploy/hotog/deploy/django.wsgi
 
-        <Directory /deploy/hotog/install/apache/django.wsgi>
+        <Directory /deploy/hotog/deploy/django.wsgi>
             Order allow,deny
             Allow from all
         </Directory>
