@@ -1,7 +1,8 @@
 Packages:
 apache2
+git-core (for read-only deploy access)
 
-Config HTTP Basic Auth (tr/pineapple):
+Config HTTP Basic Auth :
  - Drop .htpasswd and .htaccess into /var/www/
  - Copy default into /etc/apache2/sites-available/
 
