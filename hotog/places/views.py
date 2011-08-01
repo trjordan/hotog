@@ -33,8 +33,11 @@ def index(request):
 
     return render_to_response('places/index.html', { 'places': place_stats })
 
-def update(request, live=False):
-    # f = open('test/data.txt')
+def update(request):
+    # import os
+    # here = os.path.dirname(os.path.realpath(__file__))
+    # filename = os.path.join(here, '../test/data.txt')
+    # f = open(filename)
 
     tr_access_token = 'OG2XGLHEC5ZMB5QBPRV3CHD0QLNPUQWSRAH55RQXTAEUIITJ'
     url = 'https://api.foursquare.com/v2/users/self/checkins?oauth_token=%s' % tr_access_token
@@ -65,8 +68,8 @@ def update(request, live=False):
     visits_to_add = [v for v in visits if v['id'] not in existing_visit_ids]
 
     for v in visits_to_add:
-        date = date.fromtimestamp(v['createdAt'])
-        place_objs[v['venue']['id']].visit_set.create(date=date, api_id=v['id'])
+        d = date.fromtimestamp(v['createdAt'])
+        place_objs[v['venue']['id']].visit_set.create(date=d, api_id=v['id'])
         
     ret = { 'places_created': len(places_to_add), 'visits_created': len(visits_to_add)}
     return HttpResponse(json.dumps(ret), mimetype="application/json")
