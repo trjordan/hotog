@@ -11,7 +11,7 @@ urlpatterns = patterns('',
 
     (r'^suggestions/$', 'places.views.index'),
     (r'^/$', 'places.views.index'),
-    (r'^update/$', 'polls.views.update'),
+    (r'^update/$', 'places.views.update'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
