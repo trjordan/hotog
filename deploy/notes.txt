@@ -2,8 +2,16 @@ Packages:
 apache2
 git-core (for read-only deploy access)
 libapache2-mod-wsgi
+python-setuptools
+sqlite3
 
 Config HTTP Basic Auth :
  - Drop .htpasswd and .htaccess into /var/www/
  - Copy default into /etc/apache2/sites-available/
 
+Set up python:
+ - Install venv
+
+Set up production:
+ - Create DB, set writable by webserver, make sure is in /deploy/hotog.db
+ - Turn off debug
