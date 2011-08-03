@@ -11,6 +11,8 @@ def total_days(td):
     return td.total_seconds() / 86400
 
 def index(request):
+    _update()
+
     places = Place.objects.all()
     place_stats = []
     dt_now = datetime.now()
@@ -34,6 +36,10 @@ def index(request):
     return render_to_response('places/index.html', { 'places': place_stats })
 
 def update(request):
+    ret = _update()
+    return HttpResponse(json.dumps(ret), mimetype="application/json")
+
+def _update():
     # import os
     # here = os.path.dirname(os.path.realpath(__file__))
     # filename = os.path.join(here, '../test/data.txt')
@@ -71,6 +77,5 @@ def update(request):
         d = date.fromtimestamp(v['createdAt'])
         place_objs[v['venue']['id']].visit_set.create(date=d, api_id=v['id'])
         
-    ret = { 'places_created': len(places_to_add), 'visits_created': len(visits_to_add)}
-    return HttpResponse(json.dumps(ret), mimetype="application/json")
+    return { 'places_created': len(places_to_add), 'visits_created': len(visits_to_add)}
     
