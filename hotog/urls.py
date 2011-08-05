@@ -9,9 +9,8 @@ urlpatterns = patterns('',
     # url(r'^$', 'hotog.views.home', name='home'),
     # url(r'^hotog/', include('hotog.foo.urls')),
 
-    (r'^suggestions/$', 'places.views.index'),
+    (r'^suggestions/$', 'places.views.suggestions'),
     (r'^$', 'places.views.index'),
-    (r'^update/$', 'places.views.update'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

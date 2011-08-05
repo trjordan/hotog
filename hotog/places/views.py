@@ -1,17 +1,28 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.http import HttpResponse
 
 import urllib
 import simplejson as json
 from datetime import date, datetime, timedelta
+from decorator import decorator
 
 from places.models import Place, Visit
+
+@decorator
+def jsonify(fn, request, *args, **kwargs):
+    ret = fn(request, *args, **kwargs)
+    retstr = json.dumps({'data': ret, 'ok': True })
+    return HttpResponse(retstr, mimetype="application/json")
 
 def total_days(td):
     return td.total_seconds() / 86400
 
 def index(request):
-    _update()
+    #_update()
+    return render(request, 'index.html')
+
+@jsonify
+def suggestions(request):
 
     places = Place.objects.all()
     place_stats = []
@@ -31,9 +42,8 @@ def index(request):
 
     # Sort by longest time since "due" date
     place_stats.sort(key=lambda x: x['mean'] - x['current'])
-    places[0].foo = 'bar'
 
-    return render_to_response('places/index.html', { 'places': place_stats })
+    return place_stats
 
 def update(request):
     ret = _update()
