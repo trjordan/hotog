@@ -30,7 +30,7 @@ def index(request):
         place_stats.append({'name': p.name, 'mean': mean_delta, 'current': cur_delta})
 
     # Sort by longest time since "due" date
-    place_stats.sort(key=lambda x: x['current'] - x['mean'])
+    place_stats.sort(key=lambda x: x['mean'] - x['current'])
     places[0].foo = 'bar'
 
     return render_to_response('places/index.html', { 'places': place_stats })
