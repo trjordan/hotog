@@ -1,12 +1,12 @@
 html { font-family:   'Special Elite', cursive, Verdana; font-size: 18px; color: #ddd; }
-body { background-color: #555; }
+body { background-color: #444; }
 
 .hidden { display: none; }
 
 div.main-rec { width: 350px; margin: 0 auto 50px auto; padding-top: 25px; text-align: center; }
 
 div.other-recs { width: 450px; margin: 0px auto 0 auto; }
-div.other-recs h2 { text-align: center; box-shadow: }
+div.other-recs h2 { text-align: center; }
 div.other-recs .since { font-size: .8em; }
 div.other-recs li { padding: 3px 0 3px 0; }
 div.other-recs li.overflow { display: none; }
