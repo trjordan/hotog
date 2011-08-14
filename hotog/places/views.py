@@ -40,7 +40,8 @@ def suggestions(request):
 
         place_stats.append({'name': p.name, 'mean': mean_delta, 'current': cur_delta})
 
-    # Sort by longest time since "due" date
+    # Sort by longest time since "due" date, then by longest absolute time
+    place_stats.sort(key=lambda x: x['current'], reverse=True)
     place_stats.sort(key=lambda x: x['mean'] - x['current'])
 
     return place_stats
