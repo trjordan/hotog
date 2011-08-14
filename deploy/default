@@ -3,7 +3,8 @@ WSGIPythonHome /venv
         Alias /robots.txt /deploy/hotog/hotog/static/robots.txt
         Alias /favicon.ico /deploy/hotog/hotog/static/favicon.ico
 
-        AliasMatch ^/([^/]*\.css) /deploy/hotog/hotog/static/styles/$1
+        AliasMatch ^/([^/]*\.css) /deploy/hotog/hotog/places/static/css/$1
+        AliasMatch ^/([^/]*\.js) /deploy/hotog/hotog/places/static/js/$1
 
         Alias /media/ /deploy/hotog/hotog/media/
         Alias /static/ /deploy/hotog/hotog/static/

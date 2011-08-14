@@ -15,3 +15,8 @@ Set up python:
 Set up production:
  - Create DB, set writable by webserver, make sure is in /deploy/hotog.db
  - Turn off debug
+
+Static files:
+ - Currently served out of only the places/static dir. 
+ - Possible to serve them out of a single place. Have to figure this out
+ later. Currently, the admin interface probably doesn't work.
