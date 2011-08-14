@@ -1,5 +1,5 @@
-html { font-family:   'Special Elite', cursive, Verdana; font-size: 18px; }
-body { background-color: #777; }
+html { font-family:   'Special Elite', cursive, Verdana; font-size: 18px; color: #ddd; }
+body { background-color: #555; }
 
 .hidden { display: none; }
 
@@ -10,4 +10,4 @@ div.other-recs h2 { text-align: center; box-shadow: }
 div.other-recs .since { font-size: .8em; }
 div.other-recs li { padding: 3px 0 3px 0; }
 div.other-recs li.overflow { display: none; }
-div.other-recs a.overflow { color: #000; text-decoration: none; font-size: 1.2em; }
+div.other-recs a.overflow { color: #ddd; text-decoration: none; font-size: 1.2em; }
