@@ -1,3 +1,4 @@
+{% load raw %}
 <html>
   <head>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script>
@@ -5,13 +6,15 @@
     <script type="text/javascript" src="{{ STATIC_URL }}js/main.js"></script>
   </head>
   <body>
+    {% raw %}
     <script type="text/x-jquery-tmpl" id="placesList">
       <ul>
-        {% for p in places %}
-          <li>Haven't been to {{ p.name }} in {{ p.current }} (normally every {{ p.mean }}).</li>
-        {% endfor %}
+        {{each(i, p) places}}
+          <li>Haven't been to ${ p.name } in ${ p.current } (normally every ${ p.mean }).</li>
+        {{/each}}
       </ul>
     </script>
+    {% endraw %}
 </body>
 </html>
 
