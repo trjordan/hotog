@@ -1,0 +1,7 @@
+html { font-family:   'Special Elite', cursive, Verdana; font-size: 18px; }
+
+.hidden { display: none; }
+
+div.main-rec { width: 350px; margin: 0 auto 50px auto; text-align: center; }
+div.other-recs { width: 450px; margin: 0 auto 0 auto; }
+div.other-recs h2 { text-align: center; }
