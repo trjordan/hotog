@@ -18,7 +18,7 @@ def total_days(td):
     return td.total_seconds() / 86400
 
 def index(request):
-    #_update()
+    _update()
     return render(request, 'index.html')
 
 @jsonify
