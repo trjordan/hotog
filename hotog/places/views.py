@@ -34,6 +34,7 @@ def suggestions(request):
             continue
         
         dates = [v.date for v in visits] + [dnow]
+        dates.sort()
         deltas = [v - dates[i-1] for i, v in enumerate(dates[1:], start=1)]
         cur_delta = total_days(deltas[-1])
         mean_delta = sum([total_days(d) for d in deltas]) / len(deltas)
@@ -45,10 +46,6 @@ def suggestions(request):
     place_stats.sort(key=lambda x: x['mean'] - x['current'])
 
     return place_stats
-
-def update(request):
-    ret = _update()
-    return HttpResponse(json.dumps(ret), mimetype="application/json")
 
 def _update():
     # import os
@@ -75,7 +72,8 @@ def _update():
     for p in existing_places:
         place_objs[p.api_id] = p
     for p in places_to_add:
-        place_objs[p['id']] = Place.objects.create(name=p['name'], api_id=p['id'])
+        if p['id'] not in place_objs:
+            place_objs[p['id']] = Place.objects.create(name=p['name'], api_id=p['id'])
 
     # Sync the visits
     visits = data_arr['response']['checkins']['items']
