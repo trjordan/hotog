@@ -57,7 +57,7 @@ def _update():
     # f = open(filename)
 
     tr_access_token = 'OG2XGLHEC5ZMB5QBPRV3CHD0QLNPUQWSRAH55RQXTAEUIITJ'
-    url = 'https://api.foursquare.com/v2/users/self/checkins?oauth_token=%s' % tr_access_token
+    url = 'https://api.foursquare.com/v2/users/self/checkins?oauth_token=%s&limit=250' % tr_access_token
     f = urllib.urlopen(url)
 
     data_str = ''.join(f.readlines())
