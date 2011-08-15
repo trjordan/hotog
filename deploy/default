@@ -3,11 +3,8 @@ WSGIPythonHome /venv
         Alias /robots.txt /deploy/hotog/hotog/static/robots.txt
         Alias /favicon.ico /deploy/hotog/hotog/static/favicon.ico
 
-        AliasMatch ^/([^/]*\.css) /deploy/hotog/hotog/places/static/css/$1
-        AliasMatch ^/([^/]*\.js) /deploy/hotog/hotog/places/static/js/$1
-
-        Alias /media/ /deploy/hotog/hotog/media/
-        Alias /static/ /deploy/hotog/hotog/static/
+        Alias /media/ /deploy/hotog/hotog/places/media/
+        Alias /static/ /deploy/hotog/hotog/places/static/
 
         <Directory /deploy/hotog/hotog/static>
             Order deny,allow
