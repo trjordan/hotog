@@ -46,7 +46,7 @@ def suggestions(request):
     random.shuffle(place_stats)
 
     # Sort by longest time since "due" date, then by longest absolute time
-    place_stats.sort(key=lambda x: x['current'] / x['mean'], reverse=True)
+    place_stats.sort(key=lambda x: round(x['current']) / round(x['mean']), reverse=True)
 
     return place_stats
 
