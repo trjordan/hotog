@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+import random
 import urllib
 import simplejson as json
 from datetime import datetime, timedelta
@@ -40,9 +41,11 @@ def suggestions(request):
 
         place_stats.append({'name': p.name, 'mean': mean_delta, 'current': cur_delta})
 
+    # Randomize, so if there are multiple, equally good, choices, we get a different one each time.
+    random.shuffle(place_stats)
+
     # Sort by longest time since "due" date, then by longest absolute time
-    place_stats.sort(key=lambda x: x['current'], reverse=True)
-    place_stats.sort(key=lambda x: x['mean'] - x['current'])
+    place_stats.sort(key=lambda x: x['current'] / x['mean'], reverse=True)
 
     return place_stats
 
@@ -71,7 +74,6 @@ def _update():
     for p in existing_places:
         place_objs[p.api_id] = p
     for p in places_to_add:
-        print p
         if p['id'] not in place_objs:
             place_objs[p['id']] = Place.objects.create(name=p['name'], api_id=p['id'])
 
@@ -83,7 +85,6 @@ def _update():
     visits_to_add = [v for v in visits if v['id'] not in existing_visit_ids]
 
     for v in visits_to_add:
-        print v
         d = datetime.fromtimestamp(v['createdAt'])
         place_objs[v['venue']['id']].visit_set.create(date=d, api_id=v['id'])
         
