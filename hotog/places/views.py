@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 import urllib
 import simplejson as json
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 from decorator import decorator
 
 from places.models import Place, Visit
@@ -26,10 +26,9 @@ def suggestions(request):
 
     places = Place.objects.all()
     place_stats = []
-    dt_now = datetime.now()
-    dnow = date(dt_now.year, dt_now.month, dt_now.day)
+    dnow = datetime.now()
     for p in places:
-        visits = p.visit_set.all()
+        visits = filter(lambda v: v.is_relevant(), p.visit_set.all())
         if len(visits) == 0:
             continue
         
@@ -72,6 +71,7 @@ def _update():
     for p in existing_places:
         place_objs[p.api_id] = p
     for p in places_to_add:
+        print p
         if p['id'] not in place_objs:
             place_objs[p['id']] = Place.objects.create(name=p['name'], api_id=p['id'])
 
@@ -83,7 +83,8 @@ def _update():
     visits_to_add = [v for v in visits if v['id'] not in existing_visit_ids]
 
     for v in visits_to_add:
-        d = date.fromtimestamp(v['createdAt'])
+        print v
+        d = datetime.fromtimestamp(v['createdAt'])
         place_objs[v['venue']['id']].visit_set.create(date=d, api_id=v['id'])
         
     return { 'places_created': len(places_to_add), 'visits_created': len(visits_to_add)}
