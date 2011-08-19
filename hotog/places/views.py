@@ -3,6 +3,7 @@ from django.http import HttpResponse
 
 import random
 import urllib
+import itertools
 import simplejson as json
 from datetime import datetime, timedelta
 from decorator import decorator
@@ -74,7 +75,11 @@ def _update():
     for p in existing_places:
         place_objs[p.api_id] = p
     for p in places_to_add:
-        if p['id'] not in place_objs:
+        
+        categories = set([c['name'] for c in p['categories']])
+        categories = categories.union(set(itertools.chain(*[c['parents'] for c in p['categories']])))
+
+        if p['id'] not in place_objs and 'Food' in categories:
             place_objs[p['id']] = Place.objects.create(name=p['name'], api_id=p['id'])
 
     # Sync the visits
@@ -86,7 +91,8 @@ def _update():
 
     for v in visits_to_add:
         d = datetime.fromtimestamp(v['createdAt'])
-        place_objs[v['venue']['id']].visit_set.create(date=d, api_id=v['id'])
+        if v['venue']['id'] in place_objs:
+            place_objs[v['venue']['id']].visit_set.create(date=d, api_id=v['id'])
         
     return { 'places_created': len(places_to_add), 'visits_created': len(visits_to_add)}
     
